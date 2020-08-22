@@ -1,5 +1,21 @@
 ﻿var func = window.func || {}, editor;
 
+(function (l) {
+    if (l.search) {
+        var q = {};
+        l.search.slice(1).split('&').forEach(function (v) {
+            var a = v.split('=');
+            q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+        });
+        if (q.page !== undefined) {
+            window.history.replaceState(null, null,
+                l.pathname.slice(0, -1) + (q.page || '') +
+                (q.q ? ('?' + q.q) : '') + l.hash
+            );
+        }
+    }
+}(window.location));
+
 func = {
     setTitle: function (title) {
         document.title = title;
